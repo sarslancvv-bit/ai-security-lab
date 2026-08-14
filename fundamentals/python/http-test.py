@@ -1,6 +1,6 @@
 import requests
 
-"""
+
 # GET
 r_get = requests.get("https://api.github.com/events", timeout=5)
 print("GET status:", r_get.status_code)
@@ -31,9 +31,9 @@ r_options = requests.options("https://httpbin.org/get", timeout=5)
 print("OPTIONS status:", r_options.status_code)
 print("OPTIONS allow header:", r_options.headers.get("allow"))
 
-"""
 
-"""
+
+
 payload = {"key1": "value1",
            "key2": "value2" 
 }
@@ -41,9 +41,7 @@ payload = {"key1": "value1",
 r= requests.get("https://httpbin.org/get", params= payload)
 
 print(r.url)
-"""
 
-"""
 https://example.com/search?q=python&page=2
 
 ?     → parametreler burada basliyor
@@ -52,9 +50,9 @@ python → value
 &     → başka parametre geliyor
 page  → ikinci key
 2     → ikinci value
-"""
 
-"""
+
+
 
 params = {"q": "python",
           "page": 2
@@ -85,9 +83,7 @@ r_get3 = requests.get("https://example.com/search",
 
 print(r_get3.url)
 
-"""
 
-"""
 r = requests.get("https://api.github.com/events")
 
 print(r.text)
@@ -100,9 +96,7 @@ print(r.text)
 
 print(r.content)
 
-"""
 
-"""
 import requests
 from PIL import Image
 from io import BytesIO
@@ -121,8 +115,7 @@ print("Content-Type:", r.headers.get("content-type"))
 image = Image.open(BytesIO(r.content))
 image.save("save.jpg")
 print("Resim kaydedildi.")
-"""
-"""
+
 r = requests.get("https://api.github.com/events")
 
 r.raise_for_status()
@@ -132,8 +125,7 @@ data = r.json()
 print(type(data))
 
 print(data[0])
-"""
-"""
+
 r = requests.get("https://api.github.com/events", stream=True)
 
 print(r.raw)
@@ -143,9 +135,7 @@ print(r.raw.read(10))
 with open(filename,"wb") as fd:
     for chunk in r.iter_content(chunk_size=128):
         fd.write(chunk)
-"""
 
-"""
 url = "https://httpbin.org/anything"
 
 params = {
@@ -184,9 +174,7 @@ print(result["headers"])
 print("\nJSON BODY:")
 print(result["json"])
 
-"""
 
-"""
 payload = {"language": ["Python","Java","JavaScript"]}
 r = requests.post("https://httpbin.org/post", data=payload)
 
@@ -206,8 +194,8 @@ r = requests.post(
     json=pload
 )
 
-"""
-"""
+
+
 import requests
 
 payload = {
@@ -227,8 +215,7 @@ print(result["form"])
 
 print("JSON:")
 print(result["json"])
-"""
-"""
+
 r = requests.get("https://httpbin.org/get")
 
 print(r.status_code)
@@ -242,8 +229,7 @@ r = requests.get("https://httpbin.org/status/404")
 print(r.status_code)
 
 r.raise_for_status()
-"""
-"""
+
 session = requests.Session()
 
 # Server bize bir cookie versin
@@ -261,20 +247,17 @@ r = session.get("https://httpbin.org/cookies")
 
 print("Server'ın gördüğü:")
 print(r.json())
-"""
-"""
+
 # GET
 r_get = requests.get("https://api.github.com/events", timeout=5)
 print("GET status", r_get.status_code)
 print("GET body (first 200 chars):", r_get.text[:200])
-"""
-"""
+
 # POST
 r_post = requests.post("https://httpbin.org/post",data={"key": "value" },timeout= 5)
 r_post.raise_for_status()
 print("POST result:", r_post.json())
-"""
-"""
+
 # PUT
 r_put = requests.put("https://httpbin.org/put", data={"key": "value"}, timeout=5)
 r_put.raise_for_status()
@@ -285,8 +268,7 @@ print("PUT result:", r_put.json())
 r_delete = requests.delete("https://httpbin.org/delete", timeout=5)
 r_delete.raise_for_status()
 print("DELETE status:", r_delete.status_code)
-"""
-"""
+
 # HEAD - no body, only check status/headers
 r_head = requests.head("https://httpbin.org/get", timeout=5)
 print("HEAD status:", r_head.status_code)
