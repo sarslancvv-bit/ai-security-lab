@@ -446,17 +446,228 @@ Breaking it down:
 
 ## 17. Important HTTP methods
 
-| Method | Purpose | Example |
-|---|---|---|
-| `GET` | Retrieve | `GET /users/42` — Give me user 42 |
-| `POST` | Submit/process | `POST /users` `{"name":"Sami"}` — Process this data, perhaps creating a user |
-| `PUT` | Replace | `PUT /users/42` `{"name":"Sami","age":23}` — Replace the target representation |
-| `PATCH` | Partially modify | `PATCH /users/42` `{"age":23}` — Change part of user 42 |
-| `DELETE` | Delete | `DELETE /users/42` — Delete user 42 |
-| `HEAD` | GET without response body | `HEAD /image.png` — Get metadata/headers only |
-| `OPTIONS` | Communication options | `OPTIONS /users` — Discover options; important for CORS preflight |
-| `CONNECT` | Tunnel | `CONNECT example.com:443` — Commonly associated with proxies |
-| `TRACE` | Diagnostics | Asks for a loop-back of the request for diagnostic purposes |
+| Method | Gerçek hayattan örnekler |
+|---|---|
+| `GET` | Ürün görüntüle, profil getir, postları getir, hava durumunu getir, arama sonuçlarını getir |
+| `POST` | Login ol, sipariş oluştur, yorum gönder, kayıt ol, ödeme başlat |
+| `PUT` | Kullanıcının profilini tamamen yeni veriyle değiştir |
+| `PATCH` | Sadece profil fotoğrafını, email'i veya sipariş durumunu değiştir |
+| `DELETE` | Yorum sil, hesap sil, sepetten ürün sil |
+| `HEAD` | Dosyayı indirmeden boyutunu/türünü kontrol et |
+| `OPTIONS` | Endpoint'in desteklediği seçenekleri / CORS izinlerini öğren |
+| `CONNECT` | Proxy üzerinden HTTPS tüneli oluştur |
+| `TRACE` | Request'in server'a nasıl ulaştığını diagnostik amaçla incele |
+
+### GET — "Bana bir şey getir"
+
+En sık göreceğin method.
+
+```
+GET /users/42              → User 42'yi getir
+GET /products/728          → Product 728'i getir
+GET /products?category=laptop&maxPrice=1000   → Filtrelenmiş liste
+GET /search?q=iphone       → Arama sonuçları
+GET /api/posts/583/comments → Bir postun yorumları
+```
+
+Kendi hesabın için cookie kullanılır:
+
+```http
+GET /api/account
+Cookie: session=ABC123
+```
+
+Security'de parçaları ayırt etmeyi öğrenirsin:
+
+```
+GET /account?id=100
+```
+`/account` → endpoint, `id` → parameter, `100` → value
+
+### POST — "Bu veriyi işle"
+
+Sadece "create" değil — server'a "bunu işle" diyorsun.
+
+```http
+POST /login
+Content-Type: application/json
+
+{"username": "sami", "password": "..."}
+```
+→ `Set-Cookie: session=ABC123`
+
+```http
+POST /orders
+
+{"product_id": 728, "quantity": 2}
+```
+→ `201 Created`
+
+Diğer örnekler: kullanıcı oluşturma, yorum gönderme, sepete ekleme, şifre sıfırlama talebi.
+
+**Ortak nokta:** Server'a veri/komut gönderip bir işlem yaptırıyorsun.
+
+### PUT — "Bunu bununla değiştir"
+
+Anahtar kelime: **replacement** (tam değiştirme).
+
+```
+OLD: {name: Sami, age: 22, city: Istanbul}
+        ↓ PUT
+NEW: {name: Sami Arslan, age: 23, city: Heidelberg}
+```
+
+```http
+PUT /users/42
+Content-Type: application/json
+
+{"name": "Sami Arslan", "age": 23, "city": "Heidelberg"}
+```
+
+Not: Gerçek API'ler her zaman textbook kadar katı değildir, ama PUT'u kavramsal olarak "replace" diye düşün.
+
+### PATCH — "Sadece şu kısmı değiştir"
+
+```http
+PATCH /users/42
+
+{"city": "Heidelberg"}
+```
+
+Diğer alanlar (`name`, `age`, `language`) değişmeden kalır.
+
+```
+PUT    ████████████  whole representation
+PATCH  ██░░░░░░░░░░  only some part
+```
+
+Örnekler: email değiştir, profil fotoğrafı güncelle, sipariş durumunu değiştir (`{"status": "cancelled"}`).
+
+### DELETE — "Bu resource'u sil"
+
+```
+DELETE /users/42
+DELETE /posts/583
+DELETE /comments/938
+DELETE /cart/items/728
+DELETE /api-keys/9283
+```
+
+Başarılı işlem sonrası genelde:
+
+```http
+HTTP/1.1 204 No Content
+```
+
+### HEAD — "GET yapardım ama body istemiyorum"
+
+```http
+HEAD /downloads/movie.mp4
+```
+
+Response body **gönderilmez**, sadece header'lar döner:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: video/mp4
+Content-Length: 4000000000
+```
+
+Kullanım: dosya var mı kontrolü (`200` vs `404`).
+
+```bash
+curl -I https://example.com
+```
+
+### OPTIONS — "Hangi communication options var?"
+
+```http
+OPTIONS /users
+```
+→
+```http
+HTTP/1.1 204 No Content
+Allow: GET, POST, OPTIONS
+```
+
+**En önemli kullanım: CORS preflight**
+
+```http
+OPTIONS /users/42
+Origin: https://shop.com
+Access-Control-Request-Method: DELETE
+```
+
+Browser soruyor: *"shop.com bu API'ye DELETE göndermek istiyor, izin var mı?"*
+
+```http
+HTTP/1.1 204 No Content
+Access-Control-Allow-Origin: https://shop.com
+Access-Control-Allow-Methods: GET, POST, DELETE
+```
+
+İzin varsa asıl request gönderilir: `DELETE /users/42`
+
+### CONNECT — "Bana bir tünel aç"
+
+```
+CONNECT example.com:443 HTTP/1.1
+Host: example.com:443
+```
+
+Anlamı: *"example.com'un 443 portuna bir tünel oluştur."* Proxy'ler (örn. Burp) bunu kullanır.
+
+```
+Browser → CONNECT example.com:443 → Proxy → example.com:443
+```
+
+### TRACE — "Request'im sana nasıl ulaştı?"
+
+```http
+TRACE / HTTP/1.1
+Host: example.com
+X-Test: hello
+```
+
+Server, aldığı request'i response'ta geri yansıtır — diagnostic amaçlı. Günümüzde çoğu server kapatır (güvenlik riski). Şu an düşük öncelikli.
+
+### Gerçek bir e-commerce akışı
+
+```
+GET   /products                        → Ürünleri göster
+GET   /products/42                     → Product 42'yi göster
+POST  /cart/items      {"product_id":42}   → Sepete ekle
+PATCH /cart/items/42   {"quantity":3}      → Adedi 3 yap
+DELETE /cart/items/42                  → Sepetten çıkar
+POST  /orders          {"address_id":15}   → Sipariş oluştur
+GET   /orders/928                      → Siparişi göster
+PATCH /orders/928      {"status":"cancelled"} → Siparişi iptal et
+```
+
+### En çok odaklanılması gereken beşli
+
+```
+GET     → getir
+POST    → gönder / işle
+PUT     → tamamen değiştir
+PATCH   → kısmen değiştir
+DELETE  → sil
+```
+
+`HEAD`, `OPTIONS`, `CONNECT`, `TRACE` — şimdilik tanıyacak kadar bilmen yeterli.
+
+### Bonus: CORS ve Preflight — kısa özet
+
+- **Same-Origin Policy** → browser'ın varsayılan olarak farklı origin'lerin verisine JavaScript erişimini kısıtlamasıdır (güvenlik).
+- **CORS** → API server'ın belirli origin'lere `Access-Control-Allow-Origin` header'ıyla kontrollü izin vermesidir.
+- **Preflight** → browser'ın hassas cross-origin request'lerden (`PUT`, `PATCH`, `DELETE`, custom header'lar) önce gönderdiği `OPTIONS` isteğidir: *"Bu request'e izin var mı?"*
+- **CORS ≠ Authentication.** CORS sadece "hangi origin okuyabilir" sorusuna cevap verir; kimlik doğrulama ayrı bir katmandır (`Authorization`, `Cookie`).
+- **curl CORS'tan etkilenmez** — CORS tarayıcı güvenlik kuralıdır, browser JS için geçerlidir; terminal araçları için değil.
+
+```
+Browser JS → CORS error mümkün ❌
+curl        → her zaman çalışır ✅
+```
 
 ---
 
