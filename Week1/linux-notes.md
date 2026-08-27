@@ -1,6 +1,10 @@
-Bash one of the most common Linux Shell.
+# Linux / Bash Notes
 
-The Directory Tree in Linux (filesystem):
+Bash — one of the most common Linux shells.
+
+## Directory Tree in Linux (filesystem)
+
+```
 /
 |-- bin
 |   |-- file1
@@ -12,89 +16,89 @@ The Directory Tree in Linux (filesystem):
 |       `-- file5
 |-- home
 |-- var
+```
 
-it often show username, host name, current directory
+It often shows username, hostname, current directory.
 
-command options arguments
+**Structure:** `command options arguments`
 
-for example : echo (command) Hello World(arguement)
+Example: `echo` (command) `Hello World` (argument)
 
-Is the shell the same as the terminal? 
+**Is the shell the same as the terminal?**
+Not exactly. The terminal is the window or app you type into. The shell is the program running inside it.
 
--> Not exactly. The terminal is the window or app you type into. The shell is the program running inside it
----------------------------------
-__PWD__
-pwd - prints your current working directory
-example--> /home/samim/ai-security-lab
+---
 
-ls - tells me  fundamentals and notes.txt are located in /home/samim/ai-security-lab
---------------------------------
+## `pwd`
 
-___CD___
+`pwd` — prints your current working directory.
 
-cd - chnages the directory
+```
+example --> /home/samim/ai-security-lab
+```
 
-Absolute path: The full path starting from the root directory (/). For example: /home/pete/Desktop
+`ls` — tells me `fundamentals` and `notes.txt` are located in `/home/samim/ai-security-lab`.
 
-Relative path: A path based on your current location. If you are in /home/pete/Documents 
-and want to access a subdirectory named taxes, you can use taxes/
+---
 
-$ cd /home/pete/Pictures -- moves directly to Pictures directory
+## `cd`
 
-(.) - represents the directory you currently in
+`cd` — changes the directory.
 
-(..) - moves you one level up to the directory contatining your current one
+- **Absolute path:** The full path starting from the root directory (`/`). For example: `/home/pete/Desktop`
+- **Relative path:** A path based on your current location. If you are in `/home/pete/Documents` and want to access a subdirectory named `taxes`, you can use `taxes/`.
 
-(~)  - a shortcut to your personal home directory
+```bash
+cd /home/pete/Pictures   # moves directly to Pictures directory
+```
 
-(-) takes you back to last directory you were in
+| Symbol | Meaning |
+|---|---|
+| `.` | represents the directory you're currently in |
+| `..` | moves you one level up to the directory containing your current one |
+| `~` | a shortcut to your personal home directory |
+| `-` | takes you back to the last directory you were in |
 
-Does cd work on files? No. cd changes into directories, not regular files.
+**Does `cd` work on files?** No. `cd` changes into directories, not regular files.
 
---------------------------------
+---
 
-__LS__
+## `ls`
 
-list the directories and files in currnet directory
+List the directories and files in the current directory.
 
-(ls -a) - filenames that start with a dot (.) are hidden, enables to view.
+| Option | Meaning |
+|---|---|
+| `-a` | Show all files, including hidden files (filenames starting with a dot `.`). |
+| `-l` | Long format — shows file permissions, number of links, owner, group, size, modification time, and name. |
+| `-h` | Human-readable sizes (used with `-l`). |
+| `-t` | Sort by modification time. |
+| `-r` | Reverse the sort order. |
+| `-S` | Sort by file size. |
+| `-d` | List the directory itself instead of its contents. |
 
-(ls -l) - shows file permissions, number of links, owner, group, size, modification time, and name.
+Common combos:
+```bash
+ls -lh
+ls -la
+ls -ltr   # sort by time, then reverse
+```
 
-(ls -lh) - human readable output
+---
 
-(ls -lt) sorts by modification time with -t
+## `touch`
 
-(ls -r) sorts in reverse order
+Its primary purpose is to change file timestamps; it is also commonly used to create new, empty files.
 
-(ls -ltr) first sorts by time, and reverses.
+```bash
+touch mysuperduperfile          # if the file does not exist, touch creates it
+touch file1.txt file2.txt file3.log   # can create multiple files at once
+```
 
-useful commands: 
-
-ls-lh
-ls-la
-ls-ltr
-
--a: Show all files, including hidden files.
--l: Use long format.
--h: Show human-readable sizes with -l.
--r: Reverse the sort order.
--t: Sort by modification time.
--S: Sort by file size.
--d: List the directory itself instead of its contents.
-
---------------------------------
-__touch__
-
-- its primary purpose is to change file timestamps, it is also commonly used to create new, empty files.
-
-touch mysuperduperfile- if the file does not exist, touch creates it.
-
-$ touch file1.txt file2.txt file3.log- can create multiple files at once by listing their names.
-
+```bash
 # Check the original timestamp
 $ ls -l mysuperduperfile
----rw-r--r-- 1 samim samim 0 Aug 14 14:20 mysuperduperfile
+-rw-r--r-- 1 samim samim 0 Aug 14 14:20 mysuperduperfile
 
 # Update the timestamp
 $ touch mysuperduperfile
@@ -102,181 +106,213 @@ $ touch mysuperduperfile
 # Check the new timestamp
 $ ls -l mysuperduperfile
 -rw-r--r-- 1 samim samim 0 Aug 14 14:21 mysuperduperfile
+```
 
--updates the timestamps to current time , if the file already exists.
+Updates the timestamp to the current time if the file already exists.
 
-touch file1.txt file2.txt file3.log
+| Option | Meaning |
+|---|---|
+| `-a` | Change only the access time. |
+| `-m` | Change only the modification time. |
+| `-c` | Do not create the file if it does not exist. |
+| `-d "DATE"` | Use a specific date string. |
+| `-r FILE` | Use another file's timestamp as a reference. |
+| `-t STAMP` | Use a timestamp in a compact numeric format. |
 
--a: Change only the access time.
--m: Change only the modification time.
--c: Do not create the file if it does not exist.
--d "DATE": Use a specific date string.
--r FILE: Use another file's timestamp as a reference.
--t STAMP: Use a timestamp in a compact numeric format.
--------------------------------------
+---
 
-__file__
+## `file`
 
-To find out what kind of file a file is, you can use the file command
+To find out what kind of file a file is, you can use the `file` command.
 
+```bash
 file fundamentals
 fundamentals: directory
 
-file fundamentals notes.txt file1.txt -- can use multiple files
+file fundamentals notes.txt file1.txt   # can use multiple files
 
-file * -- show every directory's properties:
+file *   # show every item's properties
 file1.txt:        empty
 file2.txt:        empty
 file3.log:        empty
 fundamentals:     directory
 mysuperduperfile: empty
 notes.txt:        ASCII text
+```
 
--i shows the MIME-style information, useful when working with web files or scrpits
+`-i` shows the MIME-style information, useful when working with web files or scripts:
+```bash
+file -i index.html
+```
 
-file -i index.html -- example
+| Option | Meaning |
+|---|---|
+| `-i` | Show MIME type information. |
+| `-b` | Brief mode, omit the filename in output. |
+| `-L` | Follow symbolic links. |
+| `-z` | Try to inspect compressed files. |
 
-Common file Options
--i: Show MIME type information.
--b: Brief mode, omit the filename in output.
--L: Follow symbolic links.
--z: Try to inspect compressed files.
-----------------------------------------------
+---
 
-__cat__
+## `cat`
 
-view the content of the files, and link the files together
+View the content of files, and link files together.
 
-cat file.txt - not ideal for viewing large files, but main purpose viewing
+```bash
+cat file.txt                  # not ideal for large files, but its main purpose is viewing
+cat dogfile birdfile > animals   # linking example
+cat > newfile.txt             # creates a new file
+cat >> notes.txt              # append new information into an existing file
+```
 
-cat dogfile birdfile > animals - this is the linking example
+| Option | Meaning |
+|---|---|
+| `-n` | Number all output lines, starting from 1. |
+| `-b` | Number only non-empty output lines. |
+| `-s` | Squeeze multiple blank lines into one blank line. |
+| `-A` | Show non-printing characters, tabs, and line endings. |
 
-cat > newfile.txt - this creates new file
+`cat` is for short files. For long files, use `less` so you can scroll, search, and quit without flooding the terminal.
 
-cat >> notes.txt - append new information into an existing file
+---
 
+## `less`
 
--n: Number all output lines, starting from 1.
--b: Number only non-empty output lines.
--s: Squeeze multiple blank lines into one blank line.
--A: Show non-printing characters, tabs, and line endings.
+```bash
+less /home/samim/ai-security-lab/newfile.txt   # enters the long text
+```
 
+**Inside `less`:**
+1. Page Up, Page Down, Up, and Down to navigate line by line or page by page.
+2. Press `g` to move directly to the beginning of the text file.
+3. Press `G` (Shift + g) to jump to the end of the text file.
+4. Press `u` to move up and `d` to move down.
+5. If you forget the commands while inside `less`, just press `h` to display a helpful summary.
 
-(cat) is for short files. For long files, use (less) so can scroll, and search and quit without flooding the terminal
-----------------------------
+| Command | Meaning |
+|---|---|
+| `/search_term` | Searches forward for "search_term". |
+| `?search_term` | Searches backward for "search_term". |
+| `n` | Jumps to the next occurrence of the search term. |
+| `N` | Jumps to the previous occurrence. |
 
-__less__
+| Option | Meaning |
+|---|---|
+| `-N` | Show line numbers. |
+| `+G` | Open at the end of the file. |
+| `+F` | Follow new content as it is added, similar to `tail -f` — dosyayı aç ve yeni eklenen içerikleri takip et. |
 
-less /home/samim/ai-security-lab/newfile.txt - it enters the long text
+---
 
-Inside Less:
+## `history`
 
-1- -Page Up, Page Down, Up, and Down to navigate line by line or page by page.
-2- Press g to move directly to the beginning of the text file.
-3- Press G (Shift + g) to jump to the end of the text file.
-4- Press u to move up and d to move down.
-5- If you forget the commands while inside less, just press h to display a helpful summary.
+`history` — can see the list of commands you have used.
 
-/search_term: Searches forward for "search_term".
-?search_term: Searches backward for "search_term".
-n: Jumps to the next occurrence of the search term.
-N: Jumps to the previous occurrence.
+- **Up Arrow:** Want to run the same command you just did? Just press the up arrow key to cycle backward through your history.
+- **The `!!` Shortcut:** To execute the most recent command again, use `!!`. For example, if you just ran `cat file1`, typing `!!` and pressing Enter will run `cat file1` again.
+- **Run by number:** Use `!102` to run command number 102 from your history.
+- **Run by prefix:** Use `!cat` to run the most recent command that started with `cat`.
+- With **Ctrl-R**, you can search any command in history and bash will match the most similar; pressing Enter executes the matched one.
 
--N: Show line numbers.
-+G: Open at the end of the file.
-+F: Follow new content as it is added, similar to tail -f.
+```bash
+history -c   # Clear current history list — removes all entries from the history list in memory
+history -w   # Write history to file — saves the current session's history to ~/.bash_history
+less ~/.bash_history   # view the bash_history
+history -d <offset>    # Delete a specific entry by its history number
+```
 
-dosyayı aç ve yeni eklenen içerikleri takip et
-----------------------------
+---
 
-__history__
+## `cp`
 
-history - can see the list of commands you have used
+```bash
+cp [OPTIONS] SOURCE DESTINATION
+```
 
-Up Arrow: Want to run the same command you just did? Just press the up arrow key to cycle backward through your history.
+Can copy one file to another file, one or more files into a directory, or an entire directory tree with the right option.
 
-The !! Shortcut: To execute the most recent command again, you can use !!. For example, if you just ran cat file1, typing !! and pressing Enter will run cat file1 again.
+```bash
+cp file1.txt file2.txt file3.log /home/samim/ai-security-lab/newfile_backup
+# can copy several files into the same directory
+```
 
-Run by number: Use !102 to run command number 102 from your history.
+**Wildcards:**
 
-Run by prefix: Use !cat to run the most recent command that started with cat.
+| Symbol | Meaning |
+|---|---|
+| `*` | Matches any sequence of characters. |
+| `?` | Matches any single character. |
+| `[]` | Matches any one of the characters enclosed in the brackets. |
 
-With (CTRL-R), can search any command in history and the bash will match the most similar and when u press enter it will execute the matched one.
+```bash
+cp file[A-B].txt /home/samim/ai-security-lab/my_directory
+# fileA.txt ve fileB.txt'yi my_directory'ye basar ama fileC.txt'yi basmaz
 
-Clear current history list: (history -c) removes all entries from the history list in memory.
+cp file?.txt /home/samim/ai-security-lab/my_directory
+# file10.txt'yi basmaz ama file1'den file9'a kadar hepsini basabilir (one single character)
+```
 
-Write history to file: (history -w) saves the current session's history to your history file, usually ~/.bash_history.
-to view the bash_history, (less ~/.bash_history) will show the result.
+**Copying Directories Recursively:**
 
-Delete a specific entry: (history -d) <offset> removes one command by its history number.
-----------------------------
-__cp__
+```bash
+cp -r Pumpkin/ /home/samim/Documents
+# copies Pumpkin and everything inside it to Documents directory
 
-cp [OPTIONS] SOURCE DESTINATION - can copy one file to another file, one or more files into a directory or an entire directory tree with the right option
+cp -r previous_directory/ my_directory/
+```
 
-To copy a file, you specify the source file and the destination directory or path
+**Easy way to remember:**
 
-cp file1.txt file2.txt file3.log /home/samim/ai-security-lab/newfile_backup - can copy several files into the same directory
+| Command | Destination exists? | What happens? |
+|---|---|---|
+| `cp file dir/` | Yes | Overwrites |
+| `cp -i file dir/` | Yes | Asks you |
+| `cp -f file dir/` | Yes | Forces overwrite |
+| `cp -n file dir/` | Yes | Doesn't overwrite |
 
-*: Matches any sequence of characters.
-?: Matches any single character.
-[]: Matches any one of the characters enclosed in the brackets.
+**Purpose of `-p`:** tries to make the copied file keep the same metadata as the original.
 
-cp file[A-B].txt /home/samim/ai-security-lab/my_directory 
-
-fileA.txt ve fileB.txt yi my_directory ye basar ama fileC.txt yi basmaz
-
-cp file?.txt /home/samim/ai-security-lab/my_directory 
-
-file10.txt yi basmaz ama file1'den file9'a kadar hepsini basabilir. - one single character
-
-Copying Directories Recursively:
-
-file'ları copy ediyorduk şimdi directoryleri nasıl yapabilirim komutlar bunlar:
-
-cp -r Pumpkin/ /home/samim/Documents- copies Pumpkin and everything inside it to Documents directory.
-
-cp -r previous_directory/ my_directory/ - burda yaptığım gibi
-
-Easy way to remember
-Command	      Destination exists?	What happens?
-cp file dir/    	Yes	               Overwrites
-cp -i file dir/ 	Yes	               Asks you
-cp -f file dir/ 	Yes	               Forces overwrite
-cp -n file dir/ 	Yes	               Doesn't overwrite
-
-purpose --> cp -p tries to make the copied file keep the same metadata as the original.
-For example: ls -l --time-style=long-iso notes.txt
-shows:
+```bash
+ls -l --time-style=long-iso notes.txt
 -rw-r--r-- 1 samim samim 48 2026-08-14 19:37 notes.txt
+```
 
 If you do a normal copy:
+```bash
 cp myfile.txt backup/
+```
 the copied file generally gets a new modification timestamp corresponding to when you copied it.
+
 But:
+```bash
 cp -p myfile.txt backup/
+```
 preserves important attributes, especially:
-Modification/access timestamps
-Permissions (mode), such as rw-r--r--
-Ownership, when you have permission to preserve it
+- Modification/access timestamps
+- Permissions (mode), such as `rw-r--r--`
+- Ownership, when you have permission to preserve it
 
 So if the original was last modified on August 10:
+```
 myfile.txt          → modified Aug 10
 backup/myfile.txt   → modified Aug 10
+```
 instead of appearing as newly modified today.
 
-bu dosyayı mesela ben 22:13 te modify ettim, ama -p fonksiyonu sayesinde notes.txt'nin ilk ne zaman modify olduğu bu sayede kornumuş oldu.
+> Bu dosyayı mesela ben 22:13'te modify ettim, ama `-p` fonksiyonu sayesinde notes.txt'nin ilk ne zaman modify olduğu bu sayede korunmuş oldu.
 
-Archive Copies with -a
-The -a option means archive. It is commonly used for backup-style directory copies because it preserves many attributes and copies recursively.
+**Archive Copies with `-a`:**
 
-- It copies directories recursively and preserves things such as permissions, timestamps, symbolic links, and ownership where possible.
+The `-a` option means archive. It is commonly used for backup-style directory copies because it preserves many attributes and copies recursively. It copies directories recursively and preserves things such as permissions, timestamps, symbolic links, and ownership where possible.
 
-cp -a /home/samim/ai-security-lab /my_directory /home/samim/ai-security-lab/backup -> backup'a my_directory deki tüm dosyalar kaydoldu.
+```bash
+cp -a /home/samim/ai-security-lab/my_directory /home/samim/ai-security-lab/backup
+# backup'a my_directory'deki tüm dosyalar kaydoldu
+```
 
-Copy Only Newer Files with -u:
+**Copy Only Newer Files with `-u`:**
 
-Suppose:
+```
 source/
 ├── file1.txt    ← modified today
 ├── file2.txt    ← modified Monday
@@ -285,23 +321,34 @@ source/
 backup/
 ├── file1.txt    ← modified yesterday
 ├── file2.txt    ← modified today
-Run:
+```
+
+```bash
 cp -u source/*.txt backup/
+```
+
 What happens?
+```
 file1.txt → COPIED      source is newer
 file2.txt → NOT COPIED  destination is newer
 file3.txt → COPIED      doesn't exist in backup
+```
 
--r or -R: Copy directories recursively.
--i: Ask before overwriting a file.
--f: Force overwriting by removing the destination first if needed.
--n: Do not overwrite existing files.
--p: Preserve mode, ownership where possible, and timestamps.
--a: Archive mode, useful for preserving directory trees.
--u: Copy only when the source is newer than the destination.
--v: Show each file as it is copied.
+**All options:**
 
- cp -rv /home/samim/ai-security-lab/my_directory /home/samim/ai-security-lab/backup
+| Option | Meaning |
+|---|---|
+| `-r` / `-R` | Copy directories recursively. |
+| `-i` | Ask before overwriting a file. |
+| `-f` | Force overwriting by removing the destination first if needed. |
+| `-n` | Do not overwrite existing files. |
+| `-p` | Preserve mode, ownership where possible, and timestamps. |
+| `-a` | Archive mode, useful for preserving directory trees. |
+| `-u` | Copy only when the source is newer than the destination. |
+| `-v` | Show each file as it is copied. |
+
+```bash
+cp -rv /home/samim/ai-security-lab/my_directory /home/samim/ai-security-lab/backup
 
 '/home/samim/ai-security-lab/my_directory/newfile.txt' -> '/home/samim/ai-security-lab/backup/my_directory/newfile.txt'
 '/home/samim/ai-security-lab/my_directory/notes.txt' -> '/home/samim/ai-security-lab/backup/my_directory/notes.txt'
@@ -312,254 +359,252 @@ file3.txt → COPIED      doesn't exist in backup
 '/home/samim/ai-security-lab/my_directory/fileA.txt' -> '/home/samim/ai-security-lab/backup/my_directory/fileA.txt'
 '/home/samim/ai-security-lab/my_directory/fileB.txt' -> '/home/samim/ai-security-lab/backup/my_directory/fileB.txt'
 '/home/samim/ai-security-lab/my_directory/previous_directory/old_directory.txt' -> '/home/samim/ai-security-lab/backup/my_directory/previous_directory/old_directory.txt'
----------------------------------
-__move__
+```
 
-two primary purposes: renaming files or directories and moving them to a different location
+---
 
-Renaming Files and Directories:
+## `mv`
 
-mv oldfile newfile - mv notes.txt notlar.txt (kendi yaptığım)
+Two primary purposes: renaming files or directories, and moving them to a different location.
 
-mv old_directory_name new_directory_name - mv my_directory my_first_example (kendi yaptığım)
+**Renaming Files and Directories:**
 
-Moving Files and Directories:
+```bash
+mv oldfile newfile
+mv notes.txt notlar.txt          # kendi yaptığım
+
+mv old_directory_name new_directory_name
+mv my_directory my_first_example  # kendi yaptığım
+```
+
+**Moving Files and Directories:**
 
 To move a single file into a different directory:
+```bash
+mv file2 /home/pete/Documents
+mv move_deneme.txt /home/samim/ai-security-lab/backup   # kendi yaptığım
+```
 
-mv file2 /home/pete/Documents - mv move_deneme.txt /home/samim/ai-security-lab/backup (kendi yaptığım)
+Moving multiple files at once:
+```bash
+mv file_1 file_2 somedirectory/
+mv pha.txt oha2.txt /home/samim/ai-security-lab/backup   # kendi yaptığım
+```
 
-mv file_1 file_2 somedirectory/ - birden fazla dosyayı bir arada directory'ye atabiliyoruz
+On GNU/Linux systems, a useful option is `-t`, which allows you to specify the target directory first. This can be clearer when moving many files.
 
-mv pha.txt oha2.txt /home/samim/ai-security-lab/backup (kendi yaptığım)
+```bash
+mv -t somedirectory/ file_1 file_2   # tek olay ilk directory'yi yazabilmek
+```
 
-On GNU/Linux systems, a useful option for this is -t, which allows you to specify the target directory first. This can be clearer when moving many files.
+> Unlike the `cp` command, you do not need a recursive option to move a directory. `mv` handles directories by default.
 
-mv -t somedirectory/ file_1 file_2 - tek olay ilk directory' yi yazabilmek
+**Important Options:**
 
-#Unlike the cp command, you do not need a recursive option to move a directory. mv handles directories by default.
+By default, if you move a file to a destination where a file with the same name already exists, `mv` will overwrite it without warning. To prevent accidental data loss:
 
-Important Options for the mv Command:
-
-By default, if you move a file to a destination where a file with the same name already exists, mv will overwrite it without warning.
-
-To prevent accidental data loss, you can use the following options:
-
--i (interactive): This is a crucial safety feature. It will prompt you for confirmation before overwriting any existing file.
+- **`-i` (interactive):** A crucial safety feature. It will prompt you for confirmation before overwriting any existing file.
+```bash
 mv -i source_file destination_directory
 
-mv -i oha2.txt /home/samim/ai-security-lab/backup (kendi yaptığım)
-mv: overwrite '/home/samim/ai-security-lab/backup/oha2.txt'? y (kendi yaptığım)
+mv -i oha2.txt /home/samim/ai-security-lab/backup   # kendi yaptığım
+mv: overwrite '/home/samim/ai-security-lab/backup/oha2.txt'? y
+```
 
--b (backup): If you intend to overwrite a file but want to keep the old version, this option creates a backup of the destination file. The backup is typically renamed with a tilde (~) suffix.
-
+- **`-b` (backup):** If you intend to overwrite a file but want to keep the old version, this option creates a backup of the destination file. The backup is typically renamed with a tilde (`~`) suffix.
+```bash
 mv -b file1 directory_with_file1
+mv -b notes.txt /home/samim/ai-security-lab/backup/notes.txt   # kendi yaptığım
+```
 
- mv -b  notes.txt /home/samim/ai-security-lab/backup/notes.txt  (kendi yaptığım)
-
- -v (verbose): This option makes the mv command print out what it is doing, showing each file being moved or renamed.
-
-mesela: 
-
+- **`-v` (verbose):** Prints out what it is doing, showing each file being moved or renamed.
+```bash
 mv -v fileC.txt file10.txt /home/samim/ai-security-lab/my_first_example
 renamed 'fileC.txt' -> '/home/samim/ai-security-lab/my_first_example/fileC.txt'
 renamed 'file10.txt' -> '/home/samim/ai-security-lab/my_first_example/file10.txt'
+```
 
-mv -n source_file destination_directory/
-
-means move source_file into destination_directory, but do NOT overwrite it if a file with the same name already exists there.
-
-örnek: 
+- **`-n`:** Move source_file into destination_directory, but do NOT overwrite it if a file with the same name already exists there.
+```bash
 mv -n mysuperduperfile /home/samim/ai-security-lab/previous_directory
 mv: not replacing '/home/samim/ai-security-lab/previous_directory/mysuperduperfile'
----------------------------------
+```
 
-__mkdir__
+---
 
-As you work with files, you will need to organize them into directories.
+## `mkdir`
 
-The primary tool for this task is the mkdir command, which stands for make directory.
+As you work with files, you will need to organize them into directories. The primary tool for this task is `mkdir`, which stands for "make directory."
 
-Creating a Single Directory:
+```bash
+mkdir documents                       # Creating a Single Directory
+mkdir books paintings                 # Creating Multiple Directories
+mkdir -p books/hemingway/favorites    # Creating Nested Directories
+mkdir -m 755 public                   # Setting Directory Permissions
+```
 
-mkdir documents
+The `-m 755` example creates a directory that the owner can write to and others can read and enter (permissions covered later).
 
-Creating Multiple Directories:
-
-mkdir books paintings
-
-Creating Nested Directories:
-
-mkdir -p books/hemingway/favorites
-
-Setting Directory Permissions:
-
-mkdir -m 755 public
-
-You will learn more about permissions later, but this example creates a directory that the owner can write to and others can read and enter.
-
--v: Print a message for each created directory.
-
--->
+`-v`: Print a message for each created directory.
+```bash
 mkdir -pv projects/app/src
 mkdir: created directory 'projects'
 mkdir: created directory 'projects/app'
 mkdir: created directory 'projects/app/src'
+```
 
-How do I create nested directories? Use mkdir -p parent/child/grandchild.
----------------------------------
+**How do I create nested directories?** Use `mkdir -p parent/child/grandchild`.
 
-__rm__
+---
 
-To delete files, you use the rm (remove) command
+## `rm`
 
-The rm command removes directory entries from the filesystem. In normal terms, it deletes files. Unlike many desktop environments, command-line deletion usually does not move files to a trash folder, so you should check your command before pressing Enter.
+To delete files, you use the `rm` (remove) command. `rm` removes directory entries from the filesystem — in normal terms, it deletes files. Unlike many desktop environments, command-line deletion usually does not move files to a trash folder, so you should check your command before pressing Enter.
 
-Remove a Single File:
-
+**Remove a Single File:**
+```bash
 rm file1
+```
 
-Remove Files with Wildcards:
+**Remove Files with Wildcards:**
+```bash
+rm *.tmp   # removes every .tmp file in the current directory
+```
 
-rm *.tmp  --> removes every .tmp file in the current directory
-
-Before using rm with a wildcard, it is safer to preview the match with ls:
-
+Before using `rm` with a wildcard, it is safer to preview the match with `ls`:
+```bash
 $ ls *.tmp
 cache.tmp  test.tmp
 $ rm *.tmp
+```
 
-Interactive Deletion with -i:
-
+**Interactive Deletion with `-i`:**
+```bash
 rm -i important.txt
 rm: remove regular file 'important.txt'? y
+```
 
-Forceful Deletion with -f:
-
+**Forceful Deletion with `-f`:**
+```bash
 rm -f old-cache.txt
+```
+Be careful: `-f` also suppresses some safety prompts, so it can hide mistakes.
 
-Be careful: -f also suppresses some safety prompts, so it can hide mistakes.
+**Removing Directories with `-r`:**
 
-Removing Directories with -r:
-
-By default, rm cannot delete a directory.
-
+By default, `rm` cannot delete a directory.
+```bash
 rm projects
 rm: cannot remove 'projects': Is a directory
+```
 
-To remove a directory and everything inside it, use -r or -R for recursive removal.
+To remove a directory and everything inside it, use `-r` or `-R` for recursive removal:
+```bash
 rm -r old-project
+```
 
-The Dangers of rm -rf:
+**The Dangers of `rm -rf`:**
 
 This command can be appropriate for removing generated folders such as build outputs, but it is dangerous because it removes a whole tree without asking questions. Always check:
+- Are you in the directory you think you are in? Use `pwd`.
+- Did your wildcard expand correctly? Preview with `ls`.
+- Is the path absolute or relative? `/tmp/cache` and `tmp/cache` are very different.
+- Is there an accidental space? `"rm -rf old-project"` and `"rm -rf old project"` target different paths.
 
-Are you in the directory you think you are in? Use pwd.
-Did your wildcard expand correctly? Preview with ls.
-Is the path absolute or relative? /tmp/cache and tmp/cache are very different.
-Is there an accidental space? "rm -rf old-project" and "rm -rf old project" target different paths.
-
-Using rmdir for Empty Directories:
-
+**Using `rmdir` for Empty Directories:**
+```bash
 rmdir empty-directory
-#The rmdir command will only succeed if the directory is completely empty
+```
+The `rmdir` command will only succeed if the directory is completely empty.
 
- rm -rv previous_directory
-
- bu hem removelayıp hem de neyi removeladığını output ediyor:
-
+```bash
+rm -rv previous_directory
+# removes and outputs what it removed:
 removed 'previous_directory/old_directory.txt'
 removed 'previous_directory/mysuperduperfile'
 removed directory 'previous_directory'
------------------------------------------------
+```
 
-__find__
+---
 
-The find command searches directory trees using criteria such as name, type, size, and modification time.
+## `find`
 
-Using the find Command:
+The `find` command searches directory trees using criteria such as name, type, size, and modification time.
+
+**Using `find`:**
 
 You specify the directory to search in and the criteria for what you are looking for.
 
-For example, to search for a file named puppies.jpg within the /home directory and all its subdirectories, you would use:
+```bash
+find /home -name puppies.jpg
+# find /home looks inside /home and its subdirectories
+```
 
-$ find /home -name puppies.jpg
-#find /home looks inside /home and its subdirectories.
+**Searching by Name and Type:**
+```bash
+find . -name "*.txt"   # "." represents current directory
+find /home -type d -name MyFolder   # -type d looks for a directory instead of a file
+```
 
-Searching by Name and Type:
-
-find . -name "*.txt"  "." represents current directory
-
-You can also specify the type of item you are searching for. The -type option is used for this purpose. For instance, if you want to find a directory instead of a file, you can use d:
-
-find /home -type d -name MyFolder
-
-Searching by Size and Time:
-
-searching file size:
-
+**Searching by Size and Time:**
+```bash
 find . -type f -size +10M
 find . -type f -size -1k
+```
+- `-mtime -7` means modified within the last 7 days.
+- `-mtime +30` means modified more than 30 days ago.
 
--mtime -7 means modified within the last 7 days. 
--mtime +30 means modified more than 30 days ago.
+**Running Actions on Results:**
+```bash
+find . -name "*.log" -print
 
-Running Actions on Results:
+find . -name "*.log" -exec ls -l {} \;   # runs ls -l on each match
+```
+The `{}` placeholder is replaced by each matching path. The escaped semicolon marks the end of the command.
 
-$ find . -name "*.log" -print
+> Be careful with destructive actions such as `-delete`. First run the same search without `-delete` to confirm the matches.
 
-Run ls -l on each match:
+| Option | Meaning |
+|---|---|
+| `-name PATTERN` | Match by filename. |
+| `-iname PATTERN` | Match by filename, ignoring case. |
+| `-type f` | Match regular files. |
+| `-type d` | Match directories. |
+| `-size +10M` | Match files larger than 10 megabytes. |
+| `-mtime -7` | Match files modified within the last 7 days. |
+| `-maxdepth N` | Limit how deep find searches. |
 
-$ find . -name "*.log" -exec ls -l {} \;
+---
 
-The {} placeholder is replaced by each matching path. The escaped semicolon marks the end of the command.
+## `man`
 
-Be careful with destructive actions such as -delete. First run the same search without -delete to confirm the matches.
+**Inside a man page:**
+- Press `/` and type a search term to search forward.
+- Press `n` to jump to the next match.
+- Press `N` to jump to the previous match.
+- Press `q` to quit.
 
--name PATTERN: Match by filename.
--iname PATTERN: Match by filename, ignoring case.
--type f: Match regular files.
--type d: Match directories.
--size +10M: Match files larger than 10 megabytes.
--mtime -7: Match files modified within the last 7 days.
--maxdepth N: Limit how deep find searches.
----------------------------------
+**Understanding Man Page Sections:**
 
-__man__ Inside a man page:
+| Section | Meaning |
+|---|---|
+| 1 | User commands. |
+| 2 | System calls. |
+| 3 | Library functions. |
+| 5 | File formats. |
+| 8 | System administration commands. |
 
-Press / and type a search term to search forward.
-Press n to jump to the next match.
-Press N to jump to the previous match.
-Press q to quit.
+---
 
-Understanding Man Page Sections
-Manual pages are organized into numbered sections. Common sections include:
+# Permissions
 
-1: User commands.
-2: System calls.
-3: Library functions.
-5: File formats.
-8: System administration commands.
----------------------------------
-The Directory Tree in Linux (filesystem):
-/
-|-- bin
-|   |-- file1
-|   |-- file2
-|-- etc
-|   |-- file3
-|   `-- directory1
-|       |-- file4
-|       `-- file5
-|-- home
-|-- var
----------------------------------
-1- Permissions:
+## 1. Introduction to File Permissions
 
-Introduction to File Permissions:
-
+```bash
 ls -l "/mnt/c/Users/samim/OneDrive/Masaüstü"
+```
 
+```
 -rwxrwxrwx 1 samim samim        24 Jun 10 15:22  ACCOUNT.txt
 -rwxrwxrwx 1 samim samim    590915 Aug  9 15:24  AI-Security-Hafta1-4-Detay-v3.pdf
 -rwxrwxrwx 1 samim samim    101070 Jul  3 14:23 'Academic Records Summary.html'
@@ -589,232 +634,276 @@ drwxrwxrwx 1 samim samim       512 Apr 28  2025  __pycache__
 -rwxrwxrwx 1 samim samim        88 Feb 18 18:47 'meta mask password.txt'
 -rwxrwxrwx 1 samim samim      1452 Jul  9 12:10  project.json
 -rwxrwxrwx 1 samim samim       120 Jul  9 12:10  project.uiproj
+```
 
-first coloumn is important which represents the file type and its permissions.
+The first column is important — it represents the file type and its permissions.
 
-Decoding the Permission String:
+**Decoding the Permission String:**
 
- In our example, the d signifies that Desktop is a directory. For a regular file, you would see a hyphen (-).
+In this example, the `d` signifies that Desktop is a directory. For a regular file, you would see a hyphen (`-`).
 
- d |rwx | rwx| rwx
+```
+d |rwx | rwx| rwx
+```
 
- r: Read permission
- w: Write permission
- x: Execute permission
- -: No permission granted
+| Symbol | Meaning |
+|---|---|
+| `r` | Read permission |
+| `w` | Write permission |
+| `x` | Execute permission |
+| `-` | No permission granted |
 
- The meaning of these permissions can change slightly depending on whether it's a file or a directory.
+The meaning of these permissions can change slightly depending on whether it's a file or a directory. For example, execute (`x`) permission on a directory allows you to enter it, while on a file, it allows you to run it as a program.
 
- For example, execute (x) permission on a directory allows you to enter it, while on a file, it allows you to run it as a program.
+```
+d | rwx | r-x | r-x
+```
 
- d | rwx | r-x | r-x
+- **User (Owner):** The first set (`rwx`) applies to the owner of the file, which is `pete` in our example. The owner has read, write, and execute permissions.
+- **Group:** The second set (`r-x`) applies to the group associated with the file, which is `penguins`. Members of this group have read and execute permissions but cannot write to the file.
+- **Other:** The final set (`r-x`) applies to all other users on the system. They have read and execute permissions.
 
- User (Owner): The first set (rwx) applies to the owner of the file, which is pete in our example. The owner has read, write, and execute permissions.
+---
 
-Group: The second set (r-x) applies to the group associated with the file, which is penguins. Members of this group have read and execute permissions but cannot write to the file.
+## 2. Modifying Permissions
 
-Other: The final set (r-x) applies to all other users on the system. They have read and execute permissions.
-----------------------------------
-2 -Modifying Permissions
+When you need to modify file or directory access rights, the primary tool you'll use is the `chmod` (change mode) command. `chmod` offers two main methods: **symbolic** and **numerical** mode.
 
-When you need to modify file or directory access rights, the primary tool you'll use is the chmod (change mode) command.
+**Using Symbolic Mode:**
 
-The chmod command offers two main methods for this task: symbolic and numerical mode.
+It uses letters to represent users and permissions. You first specify which permission set you want to change (user, group, or other), then use `+` to add a permission or `-` to remove it.
 
-Using Symbolic Mode:
+| Symbol | Meaning |
+|---|---|
+| `u` | user/owner |
+| `g` | group |
+| `o` | others |
+| `a` | all: user, group, and others |
 
-it uses letters to represent users and permissions. 
+```bash
+chmod u+x myfile   # adds (+) the executable (x) permission for the user (u) on myfile
+chmod g-w myfile   # removes the write permission for the group
+chmod ug+w myfile  # users and group have permission to write in myfile (multiple permissions)
+```
 
-You first specify which permission set you want to change (user, group, or other), then use a + to add a permission or a - to remove it.
+**Using Numerical Mode:**
 
-u (user/owner)
-g (group)
-o (others)
-a (all: user, group, and others)
+| Value | Permission |
+|---|---|
+| 4 | read (r) |
+| 2 | write (w) |
+| 1 | execute (x) |
 
-To add the execute permission for the user on a file, you would use:
+To grant read, write, and execute permissions: `4 + 2 + 1 = 7`.
 
-chmod u+x myfile -> This command adds (+) the executable (x) permission for the user (u) on myfile.
+```bash
+chmod 755 myfile
+```
+- 7 (User): 4 + 2 + 1 → The user gets read, write, and execute permissions (rwx)
+- 5 (Group): 4 + 0 + 1 → The group gets read and execute permissions (r-x)
+- 5 (Others): 4 + 0 + 1 → All other users get read and execute permissions (r-x)
 
-chmod g-w myfile -removes the write permission for the group
+---
 
-chmod ug+w myfile - users and group have permission to write in myfile. Multiple permissions
+## 3. Ownership Permissions
 
-Using Numerical Mode:
+**Changing User Ownership:**
 
-4: read (r)
-2: write (w)
-1: execute (x)
+To transfer the ownership of a file to a different user, you use the `chown` (change owner) command. You typically need superuser privileges (`sudo`) to change the owner of a file you don't own.
 
-to grant read, write, and execute permissions, you would use 4 + 2 + 1 = 7.
+```bash
+sudo chown patty myfile   # changes the user owner of myfile to the user (patty)
+```
 
-chmod 755 myfile  :
+**Changing Group Ownership:**
+```bash
+sudo chgrp whales myfile   # sets the group ownership of myfile to the group (whales)
+```
 
-7 (User): 4 + 2 + 1 -> The user gets read, write, and execute permissions (rwx)
-5 (Group): 4 + 0 + 1 -> The group gets read and execute permissions (r-x)
-5 (Others): 4 + 0 + 1 -> All other users get read and execute permissions (r-x)
-------------------------------------------
-3- Ownership Permissions
+**Changing Both User and Group:**
+```bash
+sudo chown patty:whales myfile
+# assigns user ownership to (patty) and group ownership to (whales) for the file (myfile)
+```
 
-Changing User Ownership:
+---
 
-To transfer the ownership of a file to a different user, you use the chown (change owner) command
-You typically need superuser privileges (sudo) to change the owner of a file you don't own.
+## 4. Umask
 
-sudo chown patty myfile - changes the user owner of myfile to the user (patty)
+Every file that gets created comes with a default set of permissions. If you ever want to change that default set of permissions, you can do so with the `umask` command. This command uses the 3-bit permission set we see in numerical permissions.
 
-Changing Group Ownership:
+Instead of adding these permissions, `umask` takes away these permissions.
 
-sudo chgrp whales myfile - sets the group ownership of myfile to the group (whales)
+```bash
+umask 021
+```
+We are stating that we want the default permissions of new files to allow users access to everything, but for groups, we want to take away their write permission, and for others, we want to take away their executable permission.
 
-Changing Both User and The Group:
+The default umask on most distributions is `022`, meaning full user access, but no write access for group and other users.
 
-sudo chown patty:whales myfile 
--assigns user ownership to (patty) and group ownership to (whales) for the file (myfile).
---------------------------------------------
-4- Umask
+When you run the `umask` command, it will apply that default set of permissions to any new file you create.
 
-Every file that gets created comes with a default set of permissions. If you ever want to change that default set of permissions, you can do so with the umask command. This command uses the 3-bit permission set we see in numerical permissions.
+> **umask:** Yeni oluşturulan dosya ve klasörlerin varsayılan izinlerinden hangi izinlerin çıkarılacağını belirler.
+> Örnek: `umask 022` → group ve others için write (w) iznini kaldırır.
+> Yeni dosya: `644` (rw-r--r--), yeni klasör: `755` (rwxr-xr-x).
 
-Instead of adding these permissions, however, umask takes away these permissions.
+---
 
-umask 021 -
- we are stating that we want the default permissions of new files to allow users access to everything, but for groups, we want to take away their write permission, and for others, we want to take away their executable permission.
+## 5. Setuid
 
-The default umask on most distributions is 022, meaning full user access, but no write access for group and other users.
+There are many cases in which normal users need elevated access to do stuff. The system administrator can't always be there to enter a root password every time a user needs access to a protected file, so there are special file permission bits to allow this behavior. The **Set User ID (SUID)** allows a user to run a program as the owner of the program file rather than as themselves.
 
-When you run the umask command, it will apply that default set of permissions to any new file you create
+**Example:**
 
-umask: Yeni oluşturulan dosya ve klasörlerin varsayılan izinlerinden hangi izinlerin çıkarılacağını belirler.
-Örnek: umask 022 → group ve others için write (w) iznini kaldırır.
-Yeni dosya: 644 (rw-r--r--), yeni klasör: 755 (rwxr-xr-x).
--------------------------------------------
-5 -Setuid
-
-There are many cases in which normal users need elevated access to do stuff. The system administrator can't always be there to enter a root password every time a user needs access to a protected file, so there are special file permission bits to allow this behavior. The Set User ID (SUID) allows a user to run a program as the owner of the program file rather than as themselves.
-
-for example:
-
-Let's say I want to change my password, simple right? I just use the passwd command:
-
+Let's say I want to change my password — simple, right? I just use the `passwd` command:
+```bash
 passwd
+```
 
-What is the passwd command doing? It's modifying a couple of files, but most importantly it's modifying the /etc/shadow file. Let's look at that file for a second:
+What is the `passwd` command doing? It's modifying a couple of files, but most importantly it's modifying the `/etc/shadow` file:
 
-ls -l /etc/shadow - 
+```bash
+ls -l /etc/shadow
+```
+`/etc/shadow` → a protected Linux file that stores password hashes and password-related account information.
 
-/etc/shadow → a protected Linux file that stores password hashes and password-related account information.
+This file is owned by root — how is it possible that we are able to modify a file owned by root?
 
-this file is owned by root? How is it possible that we are able to modify a file owned by root?
+```bash
+ls -l /usr/bin/passwd
+```
+Shows detailed information about the `passwd` executable file, which is the program used to change user passwords.
 
-ls -l /usr/bin/passwd - shows detailed information about the passwd executable file, which is the program used to change user passwords.
+The important part is `-rwsr-xr-x`:
+- `rwx` → the owner (root) can read, write, and execute.
+- `s` → SUID (Set User ID) is enabled. When a normal user runs `passwd`, the program temporarily runs with the file owner's (root) privileges.
+- `r-x` → group and other users can read and execute it.
 
-The important part is -rwsr-xr-x:
-rwx → the owner (root) can read, write, and execute.
-s → SUID (Set User ID) is enabled. When a normal user runs passwd, the program temporarily runs with the file owner's (root) privileges.
-r-x → group and other users can read and execute it.
+That's why we are able to access a protected file like `/etc/shadow` when we run the `passwd` command. If you removed that bit, you would not be able to modify `/etc/shadow` and therefore not change your password.
 
-That's why we are able to access a protected file like /etc/shadow when we run the passwd command. Now if you removed that bit, you would see that you will not be able to modify /etc/shadow and therefore change your password.
+> **SUID (Set User ID) — Kısa Özet**
+> SUID, bir programı çalıştıran kişinin değil, program dosyasının sahibinin yetkileriyle çalışmasını sağlar.
+> Örnek: Normal kullanıcı `/etc/shadow` dosyasını değiştiremez çünkü dosya root'a aittir. Ancak `passwd` komutunda SUID vardır:
+> ```
+> -rwsr-xr-x root root /usr/bin/passwd
+>    ↑
+>    s = SUID
+> ```
+> Bu yüzden `passwd` çalışırken geçici olarak root yetkisiyle `/etc/shadow` dosyasını güncelleyebilir.
+>
+> **SUID verme:**
+> ```
+> chmod u+s file
+> chmod 4755 file
+> ```
+> - `4` → SUID
+> - `s` → SUID + execute izni var
+> - `S` → SUID var ama execute izni yok
+>
+> **Mantık:** Kullanıcıya tamamen root yetkisi vermeden, belirli bir programın gerekli yüksek yetkiyle çalışmasını sağlamak.
 
-SUID (Set User ID) — Kısa Özet
-SUID, bir programı çalıştıran kişinin değil, program dosyasının sahibinin yetkileriyle çalışmasını sağlar.
-Örnek: Normal kullanıcı /etc/shadow dosyasını değiştiremez çünkü dosya root'a aittir. Ancak:
-passwd
-komutunda SUID vardır:
--rwsr-xr-x root root /usr/bin/passwd
-   ↑
-   s = SUID
-Bu yüzden passwd çalışırken geçici olarak root yetkisiyle /etc/shadow dosyasını güncelleyebilir.
-SUID verme:
-chmod u+s file
-chmod 4755 file
-4 → SUID
-s → SUID + execute izni var
-S → SUID var ama execute izni yok
-Mantık: Kullanıcıya tamamen root yetkisi vermeden, belirli bir programın gerekli yüksek yetkiyle çalışmasını sağlamak.
--------------------------------
+---
 
-SGID (Set Group ID) — Kısa Özet
+## SGID (Set Group ID) — Kısa Özet
+
 SGID, SUID'nin group versiyonudur. Bir program çalıştırıldığında, kullanıcının kendi grubuyla değil, program dosyasının grubunun yetkileriyle çalışmasını sağlar.
-Örnek:
+
+**Örnek:**
+```
 -rwxr-sr-x root tty /usr/bin/wall
       ↑
       s = SGID
-Burada wall programının grubu tty. SGID sayesinde program çalışırken tty grubunun yetkilerini kullanabilir.
-SGID verme:
+```
+Burada `wall` programının grubu `tty`. SGID sayesinde program çalışırken `tty` grubunun yetkilerini kullanabilir.
+
+**SGID verme:**
+```
 chmod g+s myfile
 chmod 2555 myfile
-2 → SGID
-Group kısmındaki s → SGID aktif
-Mantık:
-SUID → dosya sahibinin (user) yetkisiyle çalıştırır.
-SGID → dosyanın grubunun yetkisiyle çalıştırır.
+```
+- `2` → SGID
+- Group kısmındaki `s` → SGID aktif
+
+**Mantık:**
+- SUID → dosya sahibinin (user) yetkisiyle çalıştırır.
+- SGID → dosyanın grubunun yetkisiyle çalıştırır.
+
 Ek olarak, SGID bir klasöre verilirse, o klasörde oluşturulan yeni dosyalar klasörün grubunu miras alır. Bu özellikle ortak proje klasörlerinde çok kullanışlıdır.
-----------------------
 
-Process Permission: 
+---
 
-1. Önce process nedir?
+## Process Permission
+
+**1. Önce process nedir?**
+
 Bir programı çalıştırdığında Linux o program için bir process (süreç) oluşturur.
+
 Örneğin kullanıcı bob:
+```bash
 touch test.txt
-çalıştırırsa:
-Bob → touch programını çalıştırır → touch process'i oluşur
-Linux bu process'in hangi kullanıcıya ait olduğunu ve hangi yetkilere sahip olduğunu UID'lerle takip eder.
-2. Real UID (RUID) — “Bunu kim başlattı?”
+```
+çalıştırırsa: Bob → `touch` programını çalıştırır → `touch` process'i oluşur. Linux bu process'in hangi kullanıcıya ait olduğunu ve hangi yetkilere sahip olduğunu UID'lerle takip eder.
+
+**2. Real UID (RUID) — "Bunu kim başlattı?"**
+
 Real UID, process'i gerçekten hangi kullanıcının başlattığını gösterir.
-Örneğin:
-Bob UID = 500
-Bob:
-touch test.txt
-çalıştırırsa process'in:
-Real UID = 500 (Bob)
-olur.
+
+Örneğin: Bob UID = 500. Bob `touch test.txt` çalıştırırsa process'in Real UID = 500 (Bob) olur.
+
 Yani RUID = process'i başlatan gerçek kullanıcı.
-3. Effective UID (EUID) — “Şu anda kimin yetkilerini kullanıyorum?”
-Bu en önemli olanı.
-Effective UID, process'in dosyalara erişirken hangi kullanıcının yetkilerini kullandığını belirler.
+
+**3. Effective UID (EUID) — "Şu anda kimin yetkilerini kullanıyorum?"**
+
+Bu en önemli olanı. Effective UID, process'in dosyalara erişirken hangi kullanıcının yetkilerini kullandığını belirler.
+
 Normal durumda:
+```
 Bob UID = 500
-
 Bob → touch çalıştırıyor
-
 RUID = 500
 EUID = 500
-Dolayısıyla touch, Bob'un yetkileriyle çalışır.
-Örneğin Bob'un /root/secret.txt dosyasına erişim izni yoksa:
+```
+Dolayısıyla `touch`, Bob'un yetkileriyle çalışır.
+
+Örneğin Bob'un `/root/secret.txt` dosyasına erişim izni yoksa:
+```bash
 touch /root/secret.txt
-başarısız olur.
-Çünkü Linux permission kontrolünde process'in EUID'sine bakar:
+```
+başarısız olur. Çünkü Linux permission kontrolünde process'in EUID'sine bakar:
+```
 EUID = 500 (Bob)
 → Bob'un izni yok
 → Access Denied
-4. SUID olunca ne değişiyor?
-İşte önceki konuyla bağlantısı burada.
-passwd programına bakalım:
+```
+
+**4. SUID olunca ne değişiyor?**
+
+`passwd` programına bakalım:
+```
 -rwsr-xr-x root root /usr/bin/passwd
    ↑
   SUID
-Dosyanın sahibi:
-root → UID 0
-Bob'un UID'si:
-Bob → UID 500
-Bob:
-passwd
-çalıştırdığında SUID nedeniyle:
+```
+
+Dosyanın sahibi: root → UID 0. Bob'un UID'si: Bob → UID 500.
+
+Bob `passwd` çalıştırdığında SUID nedeniyle:
+```
 RUID = 500 → Bob
 EUID = 0   → root
-olur.
+```
+
 Yani:
-RUID bize “Bob başlattı” der.
-EUID bize “Şu anda root yetkisi kullanılıyor” der.
-Bu nedenle passwd, normalde Bob'un değiştiremeyeceği:
-/etc/shadow
-dosyasına erişebilir.
-5. Peki Bob artık root mu?
-Hayır.
-Bu çok önemli.
-Bob'un kendisi root olmadı. Sadece passwd process'i belirli işlemleri yaparken root yetkisine sahip.
+- RUID bize "Bob başlattı" der.
+- EUID bize "Şu anda root yetkisi kullanılıyor" der.
+
+Bu nedenle `passwd`, normalde Bob'un değiştiremeyeceği `/etc/shadow` dosyasına erişebilir.
+
+**5. Peki Bob artık root mu?**
+
+Hayır. Bu çok önemli. Bob'un kendisi root olmadı. Sadece `passwd` process'i belirli işlemleri yaparken root yetkisine sahip.
+
+```
 Bob
 UID = 500
      ↓
@@ -822,196 +911,246 @@ passwd çalıştırır
      ↓
 RUID = 500  ← hâlâ Bob'un başlattığı biliniyor
 EUID = 0    ← process root yetkisi kullanabiliyor
-passwd bittiğinde bu durum da biter.
-6. Bob neden Sally'nin şifresini değiştiremiyor?
+```
+`passwd` bittiğinde bu durum da biter.
+
+**6. Bob neden Sally'nin şifresini değiştiremiyor?**
+
 Diyelim:
+```
 Bob   UID = 500
 Sally UID = 600
 root  UID = 0
-Bob passwd çalıştırınca:
+```
+
+Bob `passwd` çalıştırınca:
+```
 RUID = 500
 EUID = 0
-Program root yetkisi sayesinde /etc/shadow dosyasına teknik olarak erişebilir.
-Ama program aynı zamanda:
-RUID = 500
-bilgisinden programı Bob'un başlattığını bilir.
-Bu nedenle passwd programının kendi güvenlik kontrolleri Bob'un yalnızca kendi şifresini değiştirmesine izin verir.
+```
+
+Program root yetkisi sayesinde `/etc/shadow` dosyasına teknik olarak erişebilir. Ama program aynı zamanda `RUID = 500` bilgisinden programı Bob'un başlattığını bilir. Bu nedenle `passwd` programının kendi güvenlik kontrolleri Bob'un yalnızca kendi şifresini değiştirmesine izin verir.
+
 Yani kabaca:
+```
 Bob: "Sally'nin şifresini değiştireyim."
 
 passwd:
 "Dosyaya root olarak erişebilirim ama
 senin gerçekten Bob olduğunu RUID'den biliyorum.
 Sally'nin şifresini değiştirmene izin vermiyorum."
+```
+
 Gerçek root kullanıcısı çalıştırırsa:
+```
 RUID = 0
 EUID = 0
-olduğu için:
-passwd sally
-yapabilir.
-Burada önemli ayrım: Linux'un dosya izinleri EUID üzerinden kontrol edilir; Bob'un hangi hesabın şifresini değiştirebileceği gibi ek kısıtlamaları ise passwd programının kendisi uygulayabilir.
+```
+olduğu için `passwd sally` yapabilir.
 
-7. Saved UID (SUID / Saved User ID) nedir?
+Burada önemli ayrım: Linux'un dosya izinleri EUID üzerinden kontrol edilir; Bob'un hangi hesabın şifresini değiştirebileceği gibi ek kısıtlamaları ise `passwd` programının kendisi uygulayabilir.
+
+**7. Saved UID (SUID / Saved User ID) nedir?**
+
 Buradaki isim biraz kafa karıştırıcı çünkü SUID permission ile saved UID aynı şey değil.
+
 Saved UID'nin amacı process'in gerektiğinde yüksek yetkiyi bırakıp daha sonra tekrar geri alabilmesini sağlamaktır.
-Örneğin passwd gibi bir process düşün:
+
+Örneğin `passwd` gibi bir process düşün:
+```
 RUID = 500 → Bob
 EUID = 0   → şu anda root
 Saved UID = 0 → root yetkisini sakla
-Program her işlemi root olarak yapmak istemeyebilir.
-Sadece /etc/shadow erişimi gerektiğinde:
+```
+
+Program her işlemi root olarak yapmak istemeyebilir. Sadece `/etc/shadow` erişimi gerektiğinde:
+```
 EUID = 0
 → root yetkisi kullan
+```
+
 Normal bir işlem yaparken:
+```
 EUID = 500
 → Bob'un yetkilerine dön
+```
+
 Tekrar root gerektiğinde saved UID sayesinde:
+```
 EUID = 0
 → root yetkisine geri dön
-Bu güvenlik açısından önemlidir.
-Mantık: “Root yetkim var ama ihtiyacım olmadığı zaman kullanmayayım.”
-Üçünü yan yana koyarsak
-UID	Anlamı	Sorduğu soru
-Real UID (RUID)	Process'i başlatan kullanıcı	Kim başlattı?
-Effective UID (EUID)	Process'in aktif yetkisi	Kimin yetkisini kullanıyorum?
-Saved UID	Sonradan geri dönülebilecek UID	Hangi yetkiyi sakladım?
+```
 
+Bu güvenlik açısından önemlidir. **Mantık:** "Root yetkim var ama ihtiyacım olmadığı zaman kullanmayayım."
 
-Normal program
-Bob touch çalıştırıyor:
+**Üçünü yan yana koyarsak:**
+
+| UID | Anlamı | Sorduğu soru |
+|---|---|---|
+| Real UID (RUID) | Process'i başlatan kullanıcı | Kim başlattı? |
+| Effective UID (EUID) | Process'in aktif yetkisi | Kimin yetkisini kullanıyorum? |
+| Saved UID | Sonradan geri dönülebilecek UID | Hangi yetkiyi sakladım? |
+
+**Normal program** — Bob `touch` çalıştırıyor:
+```
 RUID  = 500 (Bob)
 EUID  = 500 (Bob)
 Saved = 500
+```
 Her şey Bob olarak çalışıyor.
-SUID program
-Bob SUID-root bir program çalıştırıyor:
+
+**SUID program** — Bob SUID-root bir program çalıştırıyor:
+```
 RUID  = 500 (Bob)   → Kim başlattı?
 EUID  = 0   (root)  → Şu an hangi yetki?
 Saved = 0   (root)  → Gerektiğinde hangi yetkiye dönebilirim?
-Notlarına yazmalık özet
-Process Permissions: Linux her process için farklı UID'ler tutar. Real UID (RUID) process'i gerçekten kimin başlattığını, Effective UID (EUID) process'in şu anda hangi kullanıcının yetkilerini kullandığını, Saved UID ise process'in gerektiğinde geri dönebileceği yetkili UID'yi tutar. Normalde RUID ve EUID aynıdır; SUID programlarda farklı olabilir.
-Örnek: Bob (UID 500) SUID'li passwd programını çalıştırırsa RUID=500 kalırken EUID=0 (root) olabilir. Böylece passwd /etc/shadow'a erişebilir, ancak program hâlâ işlemi Bob'un başlattığını bilir.
-------------------------------------------
+```
 
-__Stick_Bit__
+> **Notlarına yazmalık özet:**
+> Process Permissions: Linux her process için farklı UID'ler tutar. Real UID (RUID) process'i gerçekten kimin başlattığını, Effective UID (EUID) process'in şu anda hangi kullanıcının yetkilerini kullandığını, Saved UID ise process'in gerektiğinde geri dönebileceği yetkili UID'yi tutar. Normalde RUID ve EUID aynıdır; SUID programlarda farklı olabilir.
+> Örnek: Bob (UID 500) SUID'li `passwd` programını çalıştırırsa RUID=500 kalırken EUID=0 (root) olabilir. Böylece `passwd` `/etc/shadow`'a erişebilir, ancak program hâlâ işlemi Bob'un başlattığını bilir.
 
-Sticky Bit — Genel Özet
+---
+
+## Sticky Bit
+
 Sticky Bit, özellikle birden fazla kullanıcının yazma iznine sahip olduğu ortak klasörleri korumak için kullanılan özel bir izindir.
+
 Normalde bir klasörde herkesin write izni varsa, kullanıcılar birbirlerinin dosyalarını silebilir veya yeniden adlandırabilir. Sticky Bit bunu engeller.
+
 Sticky Bit aktif olduğunda bir dosyayı sadece:
-Dosyanın sahibi
-Klasörün sahibi
-root
+- Dosyanın sahibi
+- Klasörün sahibi
+- root
+
 silebilir veya yeniden adlandırabilir.
-Örneğin /tmp:
+
+Örneğin `/tmp`:
+```
 drwxrwxrwt /tmp
          ↑
          t = Sticky Bit
-Herkes /tmp içinde dosya oluşturabilir, ancak Ali, Mehmet'in dosyasını silemez.
-Sticky Bit ekleme:
+```
+Herkes `/tmp` içinde dosya oluşturabilir, ancak Ali, Mehmet'in dosyasını silemez.
+
+**Sticky Bit ekleme:**
+```bash
 chmod +t klasor
-Numeric olarak:
-chmod 1777 klasor
-Burada 1 = Sticky Bit.
-Kısaca: Sticky Bit = “Ortak klasörü herkes kullanabilir ama herkes sadece kendi dosyasını yönetebilir.”
-----------------------
+chmod 1777 klasor   # numeric olarak, burada 1 = Sticky Bit
+```
 
-ÖNCELİK 2
+Kısaca: **Sticky Bit = "Ortak klasörü herkes kullanabilir ama herkes sadece kendi dosyasını yönetebilir."**
 
-Checking the Status of Services:
+---
 
-Önce service nedir?
-Service, arka planda çalışan ve sisteme bir hizmet sağlayan programdır.
-Örneğin:
-nginx → web server
-ssh → uzaktan bağlantı servisi
-mysql → database servisi
-Linux'ta systemd bu servisleri yönetir. Biz de systemctl komutuyla systemd'ye ne yapacağını söyleriz.
-1. systemctl status — Genel duruma bak
-En temel komut:
+# Services (systemd / systemctl)
+
+## Checking the Status of Services
+
+**Önce service nedir?**
+
+Service, arka planda çalışan ve sisteme bir hizmet sağlayan programdır. Örneğin:
+- `nginx` → web server
+- `ssh` → uzaktan bağlantı servisi
+- `mysql` → database servisi
+
+Linux'ta `systemd` bu servisleri yönetir. Biz de `systemctl` komutuyla systemd'ye ne yapacağını söyleriz.
+
+### 1. `systemctl status` — Genel duruma bak
+
+```bash
 systemctl status nginx.service
-Şuna benzer bilgi verir:
+```
+
+```
 Loaded: loaded (...; enabled)
 Active: active (running)
 Main PID: 495
-Burada özellikle:
-Loaded → Servis sisteme yüklenmiş/tanınmış mı?
-enabled → Bilgisayar açıldığında otomatik başlatılacak mı?
-Active: active (running) → Servis şu anda çalışıyor mu?
-Main PID → Servisin ana process'inin ID'si.
+```
+
+- **Loaded** → Servis sisteme yüklenmiş/tanınmış mı?
+- **enabled** → Bilgisayar açıldığında otomatik başlatılacak mı?
+- **Active: active (running)** → Servis şu anda çalışıyor mu?
+- **Main PID** → Servisin ana process'inin ID'si.
+
 Alttaki satırlar ise servisin son loglarını gösterir. Bir hata varsa buraya bakmak faydalıdır.
-2. systemctl is-active — Şu anda çalışıyor mu?
-Sadece servisin şu anda çalışıp çalışmadığını öğrenmek istiyorsan:
+
+### 2. `systemctl is-active` — Şu anda çalışıyor mu?
+
+```bash
 systemctl is-active nginx
-Sonuç:
-active
-veya:
-inactive
-Yani:
-is-active = Şu anda çalışıyor musun?
+```
+Sonuç: `active` veya `inactive`.
 
-3. systemctl is-enabled — Açılışta otomatik başlayacak mı?
+`is-active` = Şu anda çalışıyor musun?
+
+### 3. `systemctl is-enabled` — Açılışta otomatik başlayacak mı?
+
+```bash
 systemctl is-enabled nginx
-Sonuç:
-enabled
-veya:
-disabled
-Burada önemli bir ayrım var:
-active   ≠ enabled
-Bir servis şu anda çalışıyor olabilir ama bilgisayar yeniden başlatıldığında otomatik başlamayabilir.
-Örneğin:
-active + enabled
-→ Şu anda çalışıyor ve açılışta otomatik başlayacak.
+```
+Sonuç: `enabled` veya `disabled`.
 
-active + disabled
-→ Şu anda çalışıyor ama restart sonrası otomatik başlamayacak.
+Burada önemli bir ayrım var: **active ≠ enabled**. Bir servis şu anda çalışıyor olabilir ama bilgisayar yeniden başlatıldığında otomatik başlamayabilir.
 
-inactive + enabled
-→ Şu anda çalışmıyor ama sonraki açılışta başlatılması ayarlanmış.
-4. systemctl is-failed — Servis hata vermiş mi?
+| Durum | Anlamı |
+|---|---|
+| active + enabled | Şu anda çalışıyor ve açılışta otomatik başlayacak. |
+| active + disabled | Şu anda çalışıyor ama restart sonrası otomatik başlamayacak. |
+| inactive + enabled | Şu anda çalışmıyor ama sonraki açılışta başlatılması ayarlanmış. |
+
+### 4. `systemctl is-failed` — Servis hata vermiş mi?
+
+```bash
 systemctl is-failed nginx
-Servis başlatılırken çökmüşse:
-failed
-görebilirsin.
-Yani:
-is-failed = Servis çalışırken/başlatılırken problem oluşmuş mu?
+```
+Servis başlatılırken çökmüşse `failed` görebilirsin.
 
-Gerçek bir senaryo
+`is-failed` = Servis çalışırken/başlatılırken problem oluşmuş mu?
+
+### Gerçek bir senaryo
+
 Bir web sitesine erişilemiyor ve Nginx'ten şüpheleniyorsun.
-İlk olarak:
+
+```bash
 systemctl status nginx
-Bakıyorsun:
-Active: inactive
-Demek ki Nginx çalışmıyor.
-Başlatırsın:
+```
+Bakıyorsun: `Active: inactive`. Demek ki Nginx çalışmıyor.
+
+```bash
 sudo systemctl start nginx
-Sonra:
 systemctl is-active nginx
-active
+# active
+```
+
 Ayrıca bilgisayar yeniden başladığında Nginx'in otomatik başlamasını istiyorsan:
+```bash
 sudo systemctl enable nginx
-Kontrol:
 systemctl is-enabled nginx
-enabled
-Bilmen gereken kısa özet
-systemctl status nginx
-→ Servis hakkında genel detaylı bilgi
+# enabled
+```
 
-systemctl is-active nginx
-→ Şu anda çalışıyor mu?
+**Bilmen gereken kısa özet:**
+- `systemctl status nginx` → Servis hakkında genel detaylı bilgi
+- `systemctl is-active nginx` → Şu anda çalışıyor mu?
+- `systemctl is-enabled nginx` → Bilgisayar açılınca otomatik başlayacak mı?
+- `systemctl is-failed nginx` → Servis hata durumunda mı?
 
-systemctl is-enabled nginx
-→ Bilgisayar açılınca otomatik başlayacak mı?
+> En önemli ayrım active vs enabled: Active = şu an çalışıyor, Enabled = sistem açılışında otomatik başlatılacak.
 
-systemctl is-failed nginx
-→ Servis hata durumunda mı?
-En önemli ayrım active vs enabled: Active = şu an çalışıyor, Enabled = sistem açılışında otomatik başlatılacak.
--------------------
+---
 
-Bu kısım aslında öncekinin devamı. Burada amaç systemctl status çıktısını okuyabilmek.
-Örneğin:
+## Reading `systemctl status` Output in Detail
+
+Bu kısım aslında öncekinin devamı. Burada amaç `systemctl status` çıktısını okuyabilmek.
+
+```bash
 sudo systemctl status httpd
+```
+
 Apache web server'ın durumunu gösterir. Çıktıda önemli yerler şunlar:
+
+```
 httpd.service - The Apache HTTP Server
 
 Loaded: loaded (...; enabled)
@@ -1020,83 +1159,103 @@ Process: 12345 ExecStart=... (status=0/SUCCESS)
 Main PID: 12346 (httpd)
 Status: "Running, listening on ports 80 and 443."
 CGroup: ...
-1. Loaded
-Loaded: loaded (...; enabled)
-Servisin systemd tarafından tanındığını gösterir.
-Buradaki enabled ise:
-Sistem açıldığında servis otomatik başlatılacak.
+```
 
-disabled olsaydı otomatik başlamazdı.
-2. Active ⭐
+**1. Loaded**
+```
+Loaded: loaded (...; enabled)
+```
+Servisin systemd tarafından tanındığını gösterir. Buradaki `enabled` ise: sistem açıldığında servis otomatik başlatılacak. `disabled` olsaydı otomatik başlamazdı.
+
+**2. Active ⭐**
+
 İlk bakacağın yerlerden biri:
+```
 Active: active (running)
+```
 → Servis şu anda çalışıyor.
+
 Başka sonuçlar da görebilirsin:
+```
 active (running) → çalışıyor ✅
 inactive (dead)  → çalışmıyor
 failed           → hata vererek durmuş ❌
-Ayrıca ne zamandır çalıştığını da gösterir:
-since Wed ...; 1min 23s ago
-3. Process
+```
+Ayrıca ne zamandır çalıştığını da gösterir: `since Wed ...; 1min 23s ago`
+
+**3. Process**
+```
 Process: 12345 ExecStart=/usr/sbin/httpd ... (status=0/SUCCESS)
-Servisi başlatmak için hangi komutun çalıştırıldığını ve sonucunu gösterir.
-status=0/SUCCESS
-→ Başlatma işlemi başarılı.
-Linux'ta genel olarak exit code 0 = başarı anlamına gelir.
-4. Main PID
+```
+Servisi başlatmak için hangi komutun çalıştırıldığını ve sonucunu gösterir. `status=0/SUCCESS` → Başlatma işlemi başarılı. Linux'ta genel olarak exit code 0 = başarı anlamına gelir.
+
+**4. Main PID**
+```
 Main PID: 12346 (httpd)
+```
 Servisin ana process'inin Process ID'si.
-Yani:
+```
 Apache çalışıyor
       ↓
 Process ID = 12346
-ps gibi komutlarla bu process'i ayrıca görebilirsin.
-5. Status
-Status: "Running, listening on ports 80 and 443."
-Servisin kendi verdiği ek durum bilgisidir.
-Burada Apache:
-Çalışıyorum ve 80 ile 443 portlarını dinliyorum.
+```
+`ps` gibi komutlarla bu process'i ayrıca görebilirsin.
 
-diyor.
-6. CGroup
+**5. Status**
+```
+Status: "Running, listening on ports 80 and 443."
+```
+Servisin kendi verdiği ek durum bilgisidir. Burada Apache: "Çalışıyorum ve 80 ile 443 portlarını dinliyorum." diyor.
+
+**6. CGroup**
+```
 CGroup: /system.slice/httpd.service
  ├─12346 httpd
  ├─12347 httpd
  ├─12348 httpd
-Bu servise ait process'leri gösterir.
-Bir servisin tek bir process'ten oluşması gerekmez. Apache örneğinde bir ana process ve birden fazla worker process olabilir.
-Çok detayına girmen gerekmiyorsa:
-CGroup = servise ait process'lerin grubu
+```
+Bu servise ait process'leri gösterir. Bir servisin tek bir process'ten oluşması gerekmez. Apache örneğinde bir ana process ve birden fazla worker process olabilir.
 
-diye bilmen yeterli.
-7. En alttaki loglar ⭐
+Çok detayına girmen gerekmiyorsa: **CGroup = servise ait process'lerin grubu** diye bilmen yeterli.
+
+**7. En alttaki loglar ⭐**
+```
 Starting The Apache HTTP Server...
 ...
 Started The Apache HTTP Server.
-Servisin yakın zamanda ne yaptığını gösterir.
-Özellikle servis çalışmıyorsa burası çok önemlidir:
+```
+Servisin yakın zamanda ne yaptığını gösterir. Özellikle servis çalışmıyorsa burası çok önemlidir:
+```
 Active: failed
-gördüğünde aşağıdaki loglarda neden başarısız olduğunu bulabilirsin.
-Örneğin:
+```
+gördüğünde aşağıdaki loglarda neden başarısız olduğunu bulabilirsin. Örneğin:
+```
 Failed to start...
 Address already in use
+```
 → Kullanmak istediği port başka program tarafından kullanılıyor olabilir.
-Sınav/not için bilmen gerekenler
-Alan	Anlamı
-Loaded	Servis systemd tarafından tanınmış mı, enabled mı?
-Active	Servis şu anda çalışıyor mu? ⭐
-Process	Başlatma komutu ve sonucu
-Main PID	Ana process'in ID'si
-Status	Servisin kendi durum açıklaması
-CGroup	Servise bağlı process'ler
-Logs	Son olaylar ve hata mesajları ⭐
 
+**Sınav/not için bilmen gerekenler:**
 
-En önemli mantık: Bir servisle problem olduğunda systemctl status servis çalıştır → önce Active durumuna bak → sorun varsa alttaki logları kontrol et.
+| Alan | Anlamı |
+|---|---|
+| Loaded | Servis systemd tarafından tanınmış mı, enabled mı? |
+| Active | Servis şu anda çalışıyor mu? ⭐ |
+| Process | Başlatma komutu ve sonucu |
+| Main PID | Ana process'in ID'si |
+| Status | Servisin kendi durum açıklaması |
+| CGroup | Servise bağlı process'ler |
+| Logs | Son olaylar ve hata mesajları ⭐ |
 
-sudo -l --> sudo -l kullanıcıya verilen sudo yetkilerini gösterir. (ALL : ALL) ALL, kullanıcının herhangi bir kullanıcı/grup kimliğiyle tüm komutları çalıştırabileceği anlamına gelir. Güvenli sistemlerde bunun yerine yalnızca gerekli komutlara izin verilmesi tercih edilir.
+> En önemli mantık: Bir servisle problem olduğunda `systemctl status servis` çalıştır → önce `Active` durumuna bak → sorun varsa alttaki logları kontrol et.
 
+---
 
+## `sudo -l`
 
+```bash
+sudo -l
+```
+Kullanıcıya verilen sudo yetkilerini gösterir.
 
-
+`(ALL : ALL) ALL` — kullanıcının herhangi bir kullanıcı/grup kimliğiyle tüm komutları çalıştırabileceği anlamına gelir. Güvenli sistemlerde bunun yerine yalnızca gerekli komutlara izin verilmesi tercih edilir.
