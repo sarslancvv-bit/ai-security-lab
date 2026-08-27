@@ -828,3 +828,125 @@ For your HTTP deep-dive goal, know these without notes:
 - Cookies / sessions
 - Safe vs. idempotent
 - Basic Same-Origin Policy / CORS
+---
+
+## Pratik: httpbin.org ile deneme
+
+`httpbin.org` gönderdiğin her şeyi JSON olarak sana geri yansıtır, yani ne gönderdiğini tam olarak görebilirsin. Bunu Burp Suite'e geçmeden önce method/header/body mantığını oturtmak için ideal bir alan olarak kullanabilirsin.
+
+**Not:**
+- `-X` → method'u belirtir
+- `-d` → body/data gönderir
+- `-H` → header ekler
+- `-i` / `-v` → response'u (header dahil) gösterir
+
+### Örnek Output'lar
+
+**GET isteği:**
+```bash
+curl "https://httpbin.org/get?category=laptop&maxPrice=1000"
+```
+```json
+{
+  "args": {
+    "category": "laptop",
+    "maxPrice": "1000"
+  },
+  "headers": {
+    "Host": "httpbin.org",
+    "User-Agent": "curl/8.4.0"
+  },
+  "origin": "85.123.45.67",
+  "url": "https://httpbin.org/get?category=laptop&maxPrice=1000"
+}
+```
+
+---
+
+**POST isteği:**
+```bash
+curl -X POST https://httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"username":"sami","password":"1234"}'
+```
+```json
+{
+  "args": {},
+  "data": "{\"username\":\"sami\",\"password\":\"1234\"}",
+  "headers": {
+    "Content-Type": "application/json",
+    "Content-Length": "39",
+    "Host": "httpbin.org"
+  },
+  "json": {
+    "username": "sami",
+    "password": "1234"
+  },
+  "url": "https://httpbin.org/post"
+}
+```
+
+---
+
+**HEAD isteği (sadece header, body yok):**
+```bash
+curl -I https://httpbin.org/get
+```
+```
+HTTP/2 200
+date: Thu, 27 Aug 2026 10:15:32 GMT
+content-type: application/json
+content-length: 234
+server: gunicorn/19.9.0
+access-control-allow-origin: *
+access-control-allow-credentials: true
+```
+
+---
+
+**OPTIONS isteği (Allow header):**
+```bash
+curl -X OPTIONS https://httpbin.org/get -v
+```
+```
+> OPTIONS /get HTTP/2
+> Host: httpbin.org
+>
+< HTTP/2 200
+< allow: OPTIONS, GET, HEAD
+< content-length: 0
+< access-control-allow-origin: *
+```
+
+---
+
+**Status code tetikleme:**
+```bash
+curl -i https://httpbin.org/status/404
+```
+```
+HTTP/2 404
+date: Thu, 27 Aug 2026 10:16:01 GMT
+content-type: text/html; charset=utf-8
+content-length: 0
+```
+
+---
+
+**CORS preflight simülasyonu:**
+```bash
+curl -X OPTIONS https://httpbin.org/anything \
+  -H "Origin: https://example.com" \
+  -H "Access-Control-Request-Method: DELETE" \
+  -v
+```
+```
+> OPTIONS /anything HTTP/2
+> Origin: https://example.com
+> Access-Control-Request-Method: DELETE
+>
+< HTTP/2 200
+< access-control-allow-origin: https://example.com
+< access-control-allow-methods: GET, POST, PUT, DELETE, PATCH, OPTIONS
+< access-control-allow-credentials: true
+```
